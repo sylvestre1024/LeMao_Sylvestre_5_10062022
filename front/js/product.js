@@ -27,13 +27,13 @@ function idGetRequest() {
 
     if (search_params.has('id')) {
 
-        console.log(id)
         var id = search_params.get('id');
-        
+        console.log(id)
+
         if (regex.test(id)) {
             // appelle la fonction affichage du Detail Produit
             console.log("id existant et au bon format");
-            readSelectedProduct(fullAddress + "/" + Id;);
+            readSelectedProduct(fullAddress + "/" + id);
 
         // sinon sort avec un format incorrect
         } else {
