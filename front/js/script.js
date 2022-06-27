@@ -3,10 +3,8 @@ const myHost = "localhost"
 const myPort = ":3000";
 const myAddress = "/api/products";
 const fullAddress = myProtocol + myHost + myPort + myAddress;
-const selectedId = '';
 const allProduct = fullAddress + "/";
-const selectedProduct = fullAddress + "/" + selectedId;
-const numOrder = fullAddress + "/order";
+//const numOrder = fullAddress + "/order";
 
 
 /**
@@ -34,17 +32,14 @@ async function readContent(b) {
           readProduct(content);
       };
 
-      //cas : Details du produit 
-      //
-      //
-
   } catch (b) {
     console.log('Error', b);
     };
 };
 
+
 /**
- * Formate les contenues Json receptionne
+ * Formate le contenu Json de l API pour la lecture des produits
  * @param { Json } c
  */
 async function readProduct(c) {
