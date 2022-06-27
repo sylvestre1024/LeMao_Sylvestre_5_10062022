@@ -1,33 +1,90 @@
-      /*document
-          .getElementById("hello-result")
-          .innerText = value.queryString.greetings;*/
+const myProtocol = "http://";
+const myHost = "localhost"
+const myPort = ":3000";
+const myAddress = "/api/products";
+const fullAddress = myProtocol + myHost + myPort + myAddress;
+const selectedId = '';
+const allProduct = fullAddress + "/";
+const selectedProduct = fullAddress + "/" + selectedId;
+const numOrder = fullAddress + "/order";
 
 
-let myProtocol = "http://";
-let myHost = "localhost"
-let myPort = ":3000";
-let myAddress = "/api/products";
-let fullAddress = myProtocol + myHost + myPort + myAddress;
-let selectedId = '';
-let allProduct = fullAddress + "/";
-let selectedProduct = fullAddress + "/" + selectedId;
-let numOrder = fullAddress + "/order";
-
-async function retrieveContent(e) {
-    const response = await fetch(e);
+/**
+ * Retourne du contenu de API
+ * @param { Json } a
+ */
+async function retrieveContent(a) {
+    let response = await fetch(a);
     return response.json();
-  }
+};
 
-async function showContent(a) {
+
+/**
+ * Utilise la bonne route pour les contenues Json receptionne
+ * @param { Json } b
+ */
+async function readContent(b) {
   try {
-    const content = await retrieveContent(a);
-    console.log(content);
-    /*let elt = document.createElement('div');
-    elt.innerHTML = content.join('<br />');
-    document.getElementsByTagName('body')[0].appendChild(elt);test*/
-  } catch (e) {
-    console.log('Error', e);
-  }
-}
+    let content = await retrieveContent(b);
+      //console.log(content);
 
-showContent(allProduct);
+      //cas : Tous les produits
+      if (b = "allProduct") {
+          //console.log(content);
+          readProduct(content);
+      };
+
+      //cas : Details du produit 
+      //
+      //
+
+  } catch (b) {
+    console.log('Error', b);
+    };
+};
+
+/**
+ * Formate les contenues Json receptionne
+ * @param { Json } c
+ */
+async function readProduct(c) {
+    try {
+        console.log(c);
+
+        for (var i = 0; i < c.length; i++) {
+        
+        //lien
+        let elt01 = document.createElement('a');
+        elt01.setAttribute("href", "product.html?id=" + c[i]._id);
+        document.getElementById('items').appendChild(elt01);
+
+        //article
+        let elt02 = document.createElement('article');
+        elt01.appendChild(elt02);
+
+        //image
+        let elt03 = document.createElement('img');
+        elt03.setAttribute("src", c[i].imageUrl);
+        elt03.setAttribute("alt", c[i].altTxt);
+        elt02.appendChild(elt03);
+
+        //titre
+        let elt04 = document.createElement('h3');
+        elt04.setAttribute("class", "productName");
+        elt04.innerHTML = c[i].name;
+        elt02.appendChild(elt04);
+
+        //paragraphe
+        let elt05 = document.createElement('p');
+        elt05.setAttribute("class", "productDescription");
+        elt05.innerHTML = c[i].description;
+        elt02.appendChild(elt05);
+        };
+
+    } catch (c) {
+        console.log('Error', c);
+    };
+};
+
+//Appelle le contenu des Produits de l API et insere Html
+readContent(allProduct);
