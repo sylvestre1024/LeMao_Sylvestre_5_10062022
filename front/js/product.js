@@ -212,17 +212,40 @@ async function writeSelectedProduct(array_selectedProduct) {
 function listenAddToCart() {
     const var_btnCart = document.getElementById("addToCart");
     var_btnCart.addEventListener("click", () => {
-        //creation de l object articleSelected si les conditions sont correctes
-        const obj_articleSelected = {
-            id: var_idUrl,
-            quantity: document.getElementById('quantity').value,                       //a simplifier ?
-            color: document.getElementById('colors').value,                            //a simplifier ?
-            name: document.getElementById('title').textContent                         //a simplifier ?
-        };
+    //creation de l object articleSelected si les conditions sont correctes
+    const obj_articleSelected = {
+        id: var_idUrl,
+        quantity: document.getElementById('quantity').value,                       //a simplifier ?
+        color: document.getElementById('colors').value,                            //a simplifier ?
+        name: document.getElementById('title').textContent                         //a simplifier ?
+    };
         console.log(obj_articleSelected);
-        //verifyInput(articleSelected);
+        verifyForAddToCard(articleSelected);
     });
 };
+
+/**
+ * vérification que la couleur et la quantité sont correctement selectionnés
+ * si ok ajout dans le local storage
+ * @param { array } articleSelected
+ */
+function verifyForAddToCard(articleSelected) {
+
+    const v_quantiteValue = document.getElementById('quantity').value;                 //a simplifier ?
+
+    //si aucune couleur choisie
+    if (document.getElementById('colors').value == []) {                             //a simplifier ?
+        alert("ajout au panier non pris en compte : merci de choisir une couleur")
+    //verification des choix utilisateurs pour quantite
+    } else if ((v_quantiteValue > 0 && v_quantiteValue < 101) && (v_quantiteValue % 1 == 0)) {
+
+    //renvoi a la fonction addLocalStorage pour stocker le produit commande
+        alert("ajout au panier OK : a faire")
+    // addLocalStorage();
+    } else {
+        alert("ajout au panier non pris en compte : les choix ne sont pas valides")
+    }
+}
 // BIBLIOTHEQUE SPECIFIQUE - product.html - Fin  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 
