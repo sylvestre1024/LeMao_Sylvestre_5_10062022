@@ -208,26 +208,27 @@ async function writeSelectedProduct(array_selectedProduct) {
 
 /**
  * Ajoute des ecouteurs a notre bouton Ajouter au panier
+ *  * @param { string } idAsked
  */
-function listenAddToCart() {
+function listenAddToCart(idAsked) {
     const var_btnCart = document.getElementById("addToCart");
     var_btnCart.addEventListener("click", () => {
     //creation de l object articleSelected si les conditions sont correctes
     const obj_articleSelected = {
-        id: var_idUrl,
+        id: idAsked,
         quantity: document.getElementById('quantity').value,                       //a simplifier ?
         color: document.getElementById('colors').value,                            //a simplifier ?
         name: document.getElementById('title').textContent                         //a simplifier ?
     };
-        console.log(obj_articleSelected);
-        verifyForAddToCard(articleSelected);
+        //console.log(obj_articleSelected);
+        verifyForAddToCard(obj_articleSelected);
     });
 };
 
 /**
  * vérification que la couleur et la quantité sont correctement selectionnés
  * si ok ajout dans le local storage
- * @param { array } articleSelected
+ * @param { object } articleSelected
  */
 function verifyForAddToCard(articleSelected) {
 
@@ -235,17 +236,103 @@ function verifyForAddToCard(articleSelected) {
 
     //si aucune couleur choisie
     if (document.getElementById('colors').value == []) {                             //a simplifier ?
-        alert("ajout au panier non pris en compte : merci de choisir une couleur")
+        alert("Ajout au panier non pris en compte : merci de choisir une couleur !")
     //verification des choix utilisateurs pour quantite
     } else if ((v_quantiteValue > 0 && v_quantiteValue < 101) && (v_quantiteValue % 1 == 0)) {
-
-    //renvoi a la fonction addLocalStorage pour stocker le produit commande
-        alert("ajout au panier OK : a faire")
-    // addLocalStorage();
+        //stocke le produit dans le panier
+        //alert("Ajout au panier OK !")
+        addLocalStorage(articleSelected);
     } else {
-        alert("ajout au panier non pris en compte : les choix ne sont pas valides")
+        alert("Ajout au panier non pris en compte : merci de choisir une quantité valide !")
     }
 }
+
+/**
+ * gere ajout dans le panier du composant local storage
+ * @param { object } articleForLocalStore
+ */
+function addLocalStorage(articleJson) {
+    //stockage objet
+    const idTarguet = articleJson.id;
+
+    //const testC = localStorage.getItem("basketKanap");
+    //console.log("Testc : " + testC);
+
+    // Cas reprise du panier pour cette premiere fois
+    if (localStorage.getItem(idTarguet) !== null) {
+        console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+        console.log('Vrai panier existant');
+        const objFirstLine = localStorage.getItem(idTarguet);
+        const objJson = JSON.parse(objFirstLine);
+        newItem = true; // ajoute ou met a jour
+
+        // parcours le Local Storage
+        for (i_value in localStorage) {
+            
+            const test = objJsonZ[i_value] + " (n=" + i_value + ")";
+            // cas id present on met a jour dans certaine condition
+            if (i_value == idTarguet) {
+                newItem = false;
+                console.log("Meme id : " + i_value + " compare a " + idTarguet);
+                // cas condition de mise à jour sur si meme article et meme couleur on fusionne nos quantités
+                //if () { //formule de test
+                newItem = false;
+                //
+                //
+                //
+                // cas nouveau element a creer - ne fait rien ici - detecte simplement
+                //} else if () {
+                //var_newItem = true;
+                //console.log("Nouvel element car non fusionnable");
+                //}
+
+                // cas id non present ou nouvel element non fusionnable on ajoute ce nouveau element
+            }
+            /*
+            else if (var_newItem == true) {
+                console.log("Ajout nouvel element dans la partie de mise a jour du Local Storage");
+
+                //prepare objet pour le mettre dans local storage
+                const articleForLocalStore = JSON.stringify(articleJson);
+
+                //enregistre la chaine
+                localStorage.setItem(idTarguet, articleForLocalStore);
+                }
+            */
+            
+        } // fin parcours du local storage
+
+    // Cas creation du panier pour cette premiere fois
+    } else {
+        console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+        console.log('Pas de panier on le creer');
+
+        //prepare objet pour le mettre dans local storage
+        const articleForLocalStore = JSON.stringify(articleJson);
+
+        //enregistre la chaine
+        localStorage.setItem(idTarguet, articleForLocalStore);
+        //console.log("On ajoute un element direct");
+
+        //test de restitution de element ajoute
+        const objFirstLine = localStorage.getItem(idTarguet);
+        //console.log("Test de restitution de element ajoute : " + objFirstLine);
+
+        //test de recuperation de propriete apres retransformation en objet
+        //const objJson = JSON.parse(objFirstLine);
+        //console.log(objJson.color);
+    }
+    console.log("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+    console.log("TOTAL : " + localStorage);
+    const objFirstLineZ = localStorage.getItem(idTarguet);
+    const objJsonZ = JSON.parse(objFirstLineZ);
+    console.log(objJsonZ.color);
+    for (i_value in objJsonZ) {
+        const testZ = objJsonZ[i_value] + " (n=" + i_value + ")";
+        console.log(testZ);
+    }
+
+};
 // BIBLIOTHEQUE SPECIFIQUE - product.html - Fin  _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 
@@ -253,12 +340,18 @@ function verifyForAddToCard(articleSelected) {
 // Debut Partie en execution _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 //
 //
+localStorage.clear();
+
 // product.html - Appelle le contenu du produit selectionne de l API et insere dans la page
 if (testRouteSelectedProduct() == true) {
+    var_idUrl = idGetRequest();
     hubContent('routeSelectedProduct');
+    listenAddToCart(var_idUrl);
 };
 
 // index.html - Appelle le contenu de tous les produits de l API et insere dans la page
 if (testRouteAllProducts() == true) {
     hubContent("routeAllProducts");
 };
+
+localStorage.clear();
