@@ -1,3 +1,5 @@
+// Début de la partie en execution _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
 // vide le local storage après confirmation
 localStorage.clear();
 
@@ -14,3 +16,5 @@ let orderId = document.getElementById("orderId");
 //console.log(orderId);
 
 orderId.textContent = idOrder;
+
+// Fin de la partie en execution _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
