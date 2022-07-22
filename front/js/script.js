@@ -9,7 +9,7 @@ function writeAllProducts(array_textRequest) {
 
             // lien
             let var_link = document.createElement('a');
-            var_link.setAttribute("href", "product.html?id=" + item._id);
+            var_link.setAttribute('href', 'product.html?id=' + item._id);
             document.getElementById('items').appendChild(var_link);
 
             // article
@@ -18,19 +18,19 @@ function writeAllProducts(array_textRequest) {
 
             // image
             let var_image = document.createElement('img');
-            var_image.setAttribute("src", item.imageUrl);
-            var_image.setAttribute("alt", item.altTxt);
+            var_image.setAttribute('src', item.imageUrl);
+            var_image.setAttribute('alt', item.altTxt);
             var_article.appendChild(var_image);
 
             // titre
             let var_title = document.createElement('h3');
-            var_title.setAttribute("class", "productName");
+            var_title.setAttribute('class', 'productName');
             var_title.textContent = item.name;
             var_article.appendChild(var_title);
 
             // description
             let var_description = document.createElement('p');
-            var_description.setAttribute("class", "productDescription");
+            var_description.setAttribute('class', 'productDescription');
             var_description.textContent = item.description;
             var_article.appendChild(var_description);
         });
@@ -60,7 +60,7 @@ try {
         })
         .catch(function (err) {
             console.log(err.message)
-            alert("Une erreur est survenue, merci de revenir plus tard.");
+            alert('Une erreur est survenue, merci de revenir plus tard.');
         });
 
 } catch (e) {
