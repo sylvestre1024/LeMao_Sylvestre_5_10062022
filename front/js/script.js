@@ -57,6 +57,9 @@ try {
             // écrire le contenu
             writeAllProducts(data)
 
+            // affichage du nombre d'article dans la navigation
+            displayInfoNavCart()
+
         })
         .catch(function (err) {
             console.log(err.message)
