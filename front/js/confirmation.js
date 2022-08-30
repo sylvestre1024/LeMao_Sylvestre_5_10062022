@@ -1,7 +1,7 @@
 // Début de la partie en execution _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 // vide le local storage après confirmation
-//localStorage.clear();
+localStorage.clear();
 
 // reprend la valeur du paramètre id dans l'URL
 let str = window.location.href;
